@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\NationalTeamController;
+use App\Http\Controllers\PlayersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +18,18 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::prefix('v1')->group(function () {
+    //National Teams
+    Route::controller(NationalTeamController::class)->group(function () {
+        Route::get('teams', 'index');
+        Route::post('import-teams', 'importTeamsFromCsv');
+    });
+
+    Route::controller(PlayersController::class)->group(function () {
+        //players
+        Route::get('players', 'index');
+        Route::post('import-players', 'importPlayersFromCsv');
+    });
 });
