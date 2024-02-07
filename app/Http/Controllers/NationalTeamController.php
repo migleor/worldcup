@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\NationalTeamCreate;
 use App\Models\NationalTeam;
+use App\Models\Player;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
@@ -228,12 +229,9 @@ class NationalTeamController extends Controller
 
 
     protected function clearDatabase(){
-        $instancias = NationalTeam::all();
 
-        // Eliminar en cascada cada instancia del modelo
-        foreach ($instancias as $instancia) {
-            $instancia->delete();
-        }
+        Player::truncate();
+        NationalTeam::truncate();
     }
 
 }
