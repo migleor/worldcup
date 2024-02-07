@@ -20,6 +20,13 @@ class PlayersController extends Controller
         ]);
     }
 
+    public function getPlayerById(Player $player){
+        return response()
+        ->json([
+            "players" =>  $player
+        ]);
+    }
+
     public function importPlayersFromCsv(PlayerRequest $request){
 
         $teams = NationalTeam::count();

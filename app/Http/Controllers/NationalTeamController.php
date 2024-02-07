@@ -31,6 +31,22 @@ class NationalTeamController extends Controller
         ]);
     }
 
+    public function getTeamById(NationalTeam $team){
+        return response()
+        ->json([
+            "data" => $team
+        ]);
+    }
+
+    public function getPlayersByTeam(NationalTeam $team){
+
+        $data = NationalTeam::with('players')->find($team->id);
+        return response()
+        ->json([
+            "data" => $data
+        ]);
+    }
+
     public function importTeamsFromCsv(NationalTeamCreate $request){
         $errors = $this->procescCsvFile($request->file);
         if(empty($errors)){
