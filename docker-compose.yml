@@ -1,0 +1,46 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:9000"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - postgres
+    networks:
+      - worldcup-app
+
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: worldcup
+      POSTGRES_USER: worldcup
+      POSTGRES_PASSWORD: worldcup
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sh:ro
+    command: ["bash", "-c", "sleep 10 && /docker-entrypoint-initdb.d/init.sh"]
+    networks:
+      - worldcup-app
+
+  pg_admin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@worlcup.com"
+      PGADMIN_DEFAULT_PASSWORD: "worldcup"
+    ports:
+      - 5050:80
+    networks:
+      - worldcup-app
+
+volumes:
+  postgres_data:
+
+networks:
+  worldcup-app:
+    driver: bridge

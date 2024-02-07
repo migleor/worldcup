@@ -1,0 +1,3 @@
+CREATE DATABASE worldcup;
+CREATE USER worldcup WITH PASSWORD 'worldcup';
+GRANT ALL PRIVILEGES ON DATABASE worldcup TO worldcup;
