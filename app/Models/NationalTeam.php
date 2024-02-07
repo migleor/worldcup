@@ -17,7 +17,26 @@ class NationalTeam extends Model
         'name',
         'lang',
         'federation',
-        'flag_image_path'
+        'flag_image_path',
+        'status',
+        'llave_octavos',
+        'llave_cuartos',
+        'llave_semi',
+        'llave_tercero',
+        'llave_final',
+        'position',
+        'pos_grupos'
+    ];
+
+    protected $hidden = [
+        'status',
+        'llave_octavos',
+        'llave_cuartos',
+        'llave_semi',
+        'llave_tercero',
+        'llave_final',
+        'position',
+        'pos_grupos'
     ];
 
     /**
@@ -33,5 +52,9 @@ class NationalTeam extends Model
 
     public function players(){
         return $this->hasMany(Player::class);
+    }
+
+    public function group(){
+        return $this->hasMany(Group::class);
     }
 }

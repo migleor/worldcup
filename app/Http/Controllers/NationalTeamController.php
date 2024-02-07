@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\NationalTeamCreate;
 use App\Models\NationalTeam;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
 
@@ -36,6 +37,13 @@ class NationalTeamController extends Controller
             //no hubo errores en la data del csv ahora procesamos el .zip
             $errors = $this->processZipFile($request);
             if(empty($errors)){
+                //consumimos los servicios para cargar grupos y simular fases y partidos
+                //cargar grupos
+                Artisan::call('app:sorteo-grupos');
+                //setear fixture fase de grupos
+                Artisan::call('app:set-matches-groups');
+                //simular partidos y fisture fases finales
+                Artisan::call('app:simular-fase-grupos');
                 $teams = NationalTeam::all();
                 $res = [
                     "message" => "Data uploaded succesfully",

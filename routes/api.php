@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GroupController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NationalTeamController;
@@ -32,4 +33,9 @@ Route::prefix('v1')->group(function () {
         Route::get('players', 'index');
         Route::post('import-players', 'importPlayersFromCsv');
     });
+    Route::controller(GroupController::class)->group(function () {
+        //groups
+        Route::get('groups', 'index');
+    });
+
 });

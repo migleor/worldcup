@@ -17,6 +17,14 @@ return new class extends Migration
             $table->string('lang',3)->unique();
             $table->enum('federation',['AFRICA','ASIA','CONCACAF','CONMEBOL','UEFA','ANFITRION'])->nullable();
             $table->string('flag_image_path')->nullable();
+            $table->enum('status',['Grupos','Octavos','Cuartos','Semis','Tercero','final'])->default('Grupos');
+            $table->string('pos_grupos')->nullable();
+            $table->string('llave_octavos')->nullable();
+            $table->string('llave_cuartos')->nullable();
+            $table->string('llave_semi')->nullable();
+            $table->string('llave_tercero')->nullable();
+            $table->string('llave_final')->nullable();
+            $table->integer('position')->nullable();
             $table->timestamps();
         });
     }
